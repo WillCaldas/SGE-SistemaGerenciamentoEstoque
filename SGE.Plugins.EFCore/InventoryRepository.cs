@@ -15,8 +15,11 @@ namespace SGE.Plugins.EFCore
 
         public async Task<IEnumerable<Inventory>> GetInventoriesByName(string name)
         {
-            return await this.dbContext.Inventories.Where(db => db.InventoryName.Contains(name) || 
-                                                            string.IsNullOrWhiteSpace(name)).ToListAsync();
+            return await this.dbContext
+                .Inventories
+                .Where(db => 
+                db.InventoryName.Contains(name, StringComparison.OrdinalIgnoreCase) || 
+                string.IsNullOrWhiteSpace(name)).ToListAsync();
         }
     }
 }

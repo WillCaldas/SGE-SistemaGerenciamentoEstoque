@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGE.WebApp", "SGE.WebApp\SGE.WebApp.csproj", "{0F9D8AEE-1E18-48C7-B960-DB1E207D6348}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SGE.WebApp", "SGE.WebApp\SGE.WebApp.csproj", "{0F9D8AEE-1E18-48C7-B960-DB1E207D6348}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGE.UseCases", "SGE.UseCases\SGE.UseCases.csproj", "{F0416BB7-35D7-4896-A2E0-8F285CF0429E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SGE.UseCases", "SGE.UseCases\SGE.UseCases.csproj", "{F0416BB7-35D7-4896-A2E0-8F285CF0429E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGE.CoreBusiness", "SGE.CoreBusiness\SGE.CoreBusiness.csproj", "{2D4B9B80-AD8A-4471-AF72-B2884E231A39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SGE.CoreBusiness", "SGE.CoreBusiness\SGE.CoreBusiness.csproj", "{2D4B9B80-AD8A-4471-AF72-B2884E231A39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGE.Plugins.EFCore", "SGE.Plugins.EFCore\SGE.Plugins.EFCore.csproj", "{A7A4BD0B-9D28-4570-A30E-105CBAE88881}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SGE.Plugins.EFCore", "SGE.Plugins.EFCore\SGE.Plugins.EFCore.csproj", "{A7A4BD0B-9D28-4570-A30E-105CBAE88881}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -20,8 +20,4 @@
     <ProjectReference Include="..\SGE.Plugins.EFCore\SGE.Plugins.EFCore.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controls\" />
-  </ItemGroup>
-
 </Project>
