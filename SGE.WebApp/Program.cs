@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using SGE.Plugins.EFCore;
+using SGE.UseCases;
+using SGE.UseCases.Interfaces;
+using SGE.UseCases.PluginInterfaces;
 using SGE.WebApp.Areas.Identity;
 using SGE.WebApp.Data;
 
@@ -26,6 +29,12 @@ builder.Services.AddDbContext<SGEContext>(options =>
 { 
     options.UseInMemoryDatabase("SGE");
 });
+
+//DI repositories
+builder.Services.AddTransient<IInventoryRepository, InventoryRepository>();
+
+//DI use cases
+builder.Services.AddTransient<IViewInventoriesByNameUseCase, ViewInventoriesByNameUseCase>();
 
 var app = builder.Build();
 
