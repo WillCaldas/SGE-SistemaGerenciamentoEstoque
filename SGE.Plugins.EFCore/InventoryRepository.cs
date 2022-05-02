@@ -21,6 +21,12 @@ namespace SGE.Plugins.EFCore
                 db.InventoryName.Contains(name, StringComparison.OrdinalIgnoreCase) || 
                 string.IsNullOrWhiteSpace(name)).ToListAsync();
         }
+
+        public async Task AddInventoryAsync(Inventory inventory)
+        {
+            this.dbContext.Inventories.Add(inventory);
+            await this.dbContext.SaveChangesAsync();
+        }
     }
 }
 
