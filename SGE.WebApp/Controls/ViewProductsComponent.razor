@@ -1,0 +1,29 @@
+﻿@using SGE.CoreBusiness
+@inject IViewProductsByNameUseCase ViewProductsByNameUseCase
+
+<div class="input-group mb-3">
+    <input type="text"
+           class="form-control form-control-lg"
+           placeholder="Digite o produto aqui para pesquisar"
+           @bind-value="productNameToSearch" />
+    <button type="button" class="input-group-text btn-success"
+            @onclick="@( async()=> { await ViewProducts(); } )">
+        Ver
+    </button>
+</div>
+
+@code {
+    private string? productNameToSearch;
+
+    [Parameter]
+    public EventCallback<List<Product>> OnSearchProducts { get; set; }
+
+    private async Task ViewProducts()
+    {
+        var products = (await ViewProductsByNameUseCase
+            .ExecuteAsync(productNameToSearch ?? string.Empty))?.ToList();
+
+        await OnSearchProducts.InvokeAsync(products);
+    }
+}
+

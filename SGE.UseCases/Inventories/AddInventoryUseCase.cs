@@ -7,19 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SGE.UseCases
+namespace SGE.UseCases.Inventories
 {
-    public class ViewInventoryByIdUseCase : IViewInventoryByIdUseCase
+    public class AddInventoryUseCase : IAddInventoryUseCase
     {
         private readonly IInventoryRepository inventoryRepository;
 
-        public ViewInventoryByIdUseCase(IInventoryRepository inventoryRepository)
+        public AddInventoryUseCase(IInventoryRepository inventoryRepository)
         {
             this.inventoryRepository = inventoryRepository;
         }
-        public async Task<Inventory?> ExecuteAsync(int inventoryId)
+
+        public async Task ExecuteAsync(Inventory inventory)
         {
-            return await this.inventoryRepository.GetInventoryByIdAsync(inventoryId);
+            await inventoryRepository.AddInventoryAsync(inventory);
         }
     }
 }

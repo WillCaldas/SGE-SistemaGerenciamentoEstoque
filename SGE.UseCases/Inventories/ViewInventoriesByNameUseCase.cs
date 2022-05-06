@@ -2,7 +2,7 @@
 using SGE.UseCases.Interfaces;
 using SGE.UseCases.PluginInterfaces;
 
-namespace SGE.UseCases
+namespace SGE.UseCases.Inventories
 {
     public class ViewInventoriesByNameUseCase : IViewInventoriesByNameUseCase
     {
@@ -15,7 +15,7 @@ namespace SGE.UseCases
 
         public async Task<IEnumerable<Inventory>> ExecuteAsync(string name = "")
         {
-            return await this.inventoryRepository.GetInventoriesByName(name);
+            return await inventoryRepository.GetInventoriesByName(name);
         }
     }
 }

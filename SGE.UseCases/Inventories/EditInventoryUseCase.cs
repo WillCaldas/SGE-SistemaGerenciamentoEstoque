@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SGE.UseCases
+namespace SGE.UseCases.Inventories
 {
     public class EditInventoryUseCase : IEditInventoryUseCase
     {
@@ -20,7 +20,7 @@ namespace SGE.UseCases
 
         public async Task ExecuteAsync(Inventory inventory)
         {
-            await this.inventoryRepository.UpdateInventoryAsync(inventory);
+            await inventoryRepository.UpdateInventoryAsync(inventory);
         }
     }
 }

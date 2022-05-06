@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using SGE.Plugins.EFCore;
 using SGE.UseCases;
 using SGE.UseCases.Interfaces;
+using SGE.UseCases.Inventories;
 using SGE.UseCases.PluginInterfaces;
 using SGE.WebApp.Areas.Identity;
 using SGE.WebApp.Data;
@@ -32,12 +33,14 @@ builder.Services.AddDbContext<SGEContext>(options =>
 
 //DI repositories
 builder.Services.AddTransient<IInventoryRepository, InventoryRepository>();
+builder.Services.AddTransient<IProductRepository, ProductRepository>();
 
 //DI use cases
 builder.Services.AddTransient<IViewInventoriesByNameUseCase, ViewInventoriesByNameUseCase>();
 builder.Services.AddTransient<IAddInventoryUseCase, AddInventoryUseCase>();
 builder.Services.AddTransient<IEditInventoryUseCase, EditInventoryUseCase>();
 builder.Services.AddTransient<IViewInventoryByIdUseCase, ViewInventoryByIdUseCase>();
+builder.Services.AddTransient<IViewProductsByNameUseCase, ViewProductsByNameUseCase>();
 
 var app = builder.Build();
 
