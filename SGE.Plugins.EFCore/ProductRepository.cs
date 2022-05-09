@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SGE.CoreBusiness;
-using SGE.UseCases.PluginInterfaces;
+using SGE.UseCases.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
