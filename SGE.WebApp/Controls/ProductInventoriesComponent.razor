@@ -5,12 +5,19 @@
         OnSelectInventory="OnSelectInventory"
     ></ViewInventoriesComponent>
 </div>
-@if (Inventories != null)
+
+@if (Inventories != null && Inventories.Count > 0)
 {
-    <ul>
+
+
+    <ul style="list-style-type:none">
         @foreach(var inv in this.Inventories)
         {
-        <li>@inv.InventoryName</li>
+            <li>@inv.InventoryName &nbsp; 
+                <button class="btn btn-link" type="button" @onclick="(() => RemoveInventory(inv))">
+                    Remove
+                </button>
+            </li>
         }
     </ul>
     
@@ -21,10 +28,17 @@
 
     private void OnSelectInventory(Inventory inventory)
     {
-        if (Inventories.Any(x => x.InventoryName.Equals(inventory.InventoryName, StringComparison.OrdinalIgnoreCase)))
+        if (!Inventories.Any(x => x.InventoryName.Equals(inventory.InventoryName, StringComparison.OrdinalIgnoreCase)))
         {
             this.Inventories.Add(inventory);
         }
     }
 
+    private void RemoveInventory(Inventory inv)
+    {
+        this.Inventories.Remove(inv);
+    }
+
 }
+
+

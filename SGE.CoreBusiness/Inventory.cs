@@ -14,6 +14,8 @@ namespace SGE.CoreBusiness
 
         [Range(0, double.MaxValue, ErrorMessage = "O Preço deve ser maior ou igual a {0}")]
         public double Price { get; set; }
+
+        public List<ProductInventory>? ProductInventories { get; set; }
     }
 }
 

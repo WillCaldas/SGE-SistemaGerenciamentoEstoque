@@ -24,6 +24,8 @@
             <InputNumber id="price" @bind-Value="product.Price" class="form-control"></InputNumber>
         </div>
         
+        <ProductInventoriesComponent @ref="ProductInventoriesComponent"></ProductInventoriesComponent>
+
         <br />
         <button type="submit" class="btn btn-primary">Salvar</button>
 
@@ -35,6 +37,8 @@
 
     private Product? product;
 
+    private ProductInventoriesComponent ProductInventoriesComponent;
+
     protected override void OnInitialized()
     {
         this.product = new Product();
@@ -43,17 +47,11 @@
     private async Task OnValidSubmit()
     {
         if (this.product != null)
-        {
+        {   
             await AddProductUseCase.ExecuteAsync(this.product);
             NavigationManager.NavigateTo("/productlist");
         }
     }
-
-    private void OnSelectInventory(Inventory inventory)
-    {
-        
-    }
-
 }
 
 

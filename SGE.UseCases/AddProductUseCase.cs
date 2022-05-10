@@ -12,14 +12,17 @@ namespace SGE.UseCases
     {
         private readonly IProductRepository productInventory;
 
+        public AddProductUseCase(IProductRepository productInventory)
+        {
+            this.productInventory = productInventory;
+        }
+
         public async Task ExecuteAsync(Product prod)
         {
-            if (prod == null)
-            {
-                return;
-            }
+            if (prod == null) return;
 
             await productInventory.AddProductAsync(prod);
         }
     }
 }
+
