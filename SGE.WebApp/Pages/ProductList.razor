@@ -1,5 +1,7 @@
 ﻿@page "/productlist"
 
+@inject NavigationManager NavigationManager
+
 <h3>Lista de Produtos</h3>
 <br/>
 
@@ -24,12 +26,19 @@
         </tbody>
     </table>
 }
+<br />
+<button type="button" class="btn btn-primary" @onclick="AddProduct">Novo Item</button>
 @code {
     private List<Product>? listProducts;
 
     private void OnSearchProducts(List<Product> products)
     {
         this.listProducts = products;
+    }
+
+    private void AddProduct()
+    {
+        NavigationManager.NavigateTo("/addproduct");
     }
 
 }

@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SGE.UseCases.Interfaces
+namespace SGE.UseCases.PluginInterfaces
 {
     public interface IProductRepository
     {
+        Task AddProductAsync(Product product);
         Task<List<Product>> GetProductsByName(string name);
     }
 }

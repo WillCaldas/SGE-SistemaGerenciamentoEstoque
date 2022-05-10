@@ -1,0 +1,30 @@
+﻿<div class="form-group">
+    <label>Inventários</label>
+    <ViewInventoriesComponent 
+        DisplaySearchResult="true"
+        OnSelectInventory="OnSelectInventory"
+    ></ViewInventoriesComponent>
+</div>
+@if (Inventories != null)
+{
+    <ul>
+        @foreach(var inv in this.Inventories)
+        {
+        <li>@inv.InventoryName</li>
+        }
+    </ul>
+    
+}
+
+@code {
+    private List<Inventory> Inventories = new List<Inventory>();
+
+    private void OnSelectInventory(Inventory inventory)
+    {
+        if (Inventories.Any(x => x.InventoryName.Equals(inventory.InventoryName, StringComparison.OrdinalIgnoreCase)))
+        {
+            this.Inventories.Add(inventory);
+        }
+    }
+
+}

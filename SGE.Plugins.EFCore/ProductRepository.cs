@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SGE.CoreBusiness;
-using SGE.UseCases.Interfaces;
+using SGE.UseCases.PluginInterfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +16,16 @@ namespace SGE.Plugins.EFCore
         public ProductRepository(SGEContext dbContext)
         {
             this.dbContext = dbContext;
+        }
+
+        public async Task AddProductAsync(Product product)
+        {
+            if (dbContext.Products.Any(x => x.ProductName.Equals(product.ProductName, StringComparison.OrdinalIgnoreCase)))
+            {
+                return;
+            }
+            dbContext.Products.Add(product);
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task<List<Product>> GetProductsByName(string name)
