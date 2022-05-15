@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SGE.UseCases
+namespace SGE.UseCases.Products
 {
     public class ViewProductByIdUseCase : IViewProductByIdUseCase
     {
@@ -20,7 +20,7 @@ namespace SGE.UseCases
 
         public async Task<Product> ExecuteAsync(int prodId)
         {
-            return await this.prodRep.GetProductByIdAsync(prodId);
+            return await prodRep.GetProductByIdAsync(prodId);
         }
     }
 }

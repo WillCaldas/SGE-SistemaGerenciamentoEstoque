@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using SGE.Plugins.EFCore;
-using SGE.UseCases;
 using SGE.UseCases.Interfaces;
 using SGE.UseCases.Inventories;
 using SGE.UseCases.PluginInterfaces;
+using SGE.UseCases.Products;
 using SGE.WebApp.Areas.Identity;
 using SGE.WebApp.Data;
 
@@ -44,6 +44,7 @@ builder.Services.AddTransient<IViewProductsByNameUseCase, ViewProductsByNameUseC
 builder.Services.AddTransient<IAddProductUseCase, AddProductUseCase>();
 builder.Services.AddTransient<IViewProductByIdUseCase, ViewProductByIdUseCase>();
 builder.Services.AddTransient<IEditProductUseCase, EditProductUseCase>();
+builder.Services.AddTransient<IDeleteProductUseCase, DeleteProductUseCase>();
 
 var app = builder.Build();
 

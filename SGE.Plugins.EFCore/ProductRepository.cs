@@ -28,6 +28,16 @@ namespace SGE.Plugins.EFCore
             await dbContext.SaveChangesAsync();
         }
 
+        public async Task DeleteProductAsync(int prodId)
+        {
+            var product = await dbContext.Products.FindAsync(prodId);
+            if (product != null)
+            {
+                product.IsActive = false;
+                await dbContext.SaveChangesAsync();
+            }
+        }
+
         public async Task<Product> GetProductByIdAsync(int id)
         {
             return await dbContext.Products
@@ -41,8 +51,9 @@ namespace SGE.Plugins.EFCore
             return await this.dbContext
                 .Products
                 .Where(db =>
-                db.ProductName.Contains(name, StringComparison.OrdinalIgnoreCase) ||
-                string.IsNullOrWhiteSpace(name)).ToListAsync();
+                (db.ProductName.Contains(name, StringComparison.OrdinalIgnoreCase) ||
+                string.IsNullOrWhiteSpace(name)) &&
+                db.IsActive == true).ToListAsync();
         }
 
         public async Task UpdateProductAsync(Product prod)

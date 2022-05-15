@@ -13,6 +13,7 @@ namespace SGE.UseCases.PluginInterfaces
         Task<List<Product>> GetProductsByNameAsync(string name);
         Task<Product> GetProductByIdAsync(int id);
         Task UpdateProductAsync(Product prod);
+        Task DeleteProductAsync(int prodId);
     }
 }
 
