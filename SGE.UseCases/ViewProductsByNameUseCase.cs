@@ -20,7 +20,7 @@ namespace SGE.UseCases
 
         public async Task<List<Product>> ExecuteAsync(string name = "")
         {
-            return await prodRepo.GetProductsByName(name);
+            return await prodRepo.GetProductsByNameAsync(name);
         }
     }
 }

@@ -9,20 +9,18 @@ using System.Threading.Tasks;
 
 namespace SGE.UseCases
 {
-    public class AddProductUseCase : IAddProductUseCase
+    public class EditProductUseCase : IEditProductUseCase
     {
-        private readonly IProductRepository productInventory;
+        private readonly IProductRepository prodRep;
 
-        public AddProductUseCase(IProductRepository productInventory)
+        public EditProductUseCase(IProductRepository prodRep)
         {
-            this.productInventory = productInventory;
+            this.prodRep = prodRep;
         }
 
         public async Task ExecuteAsync(Product prod)
         {
-            if (prod == null) return;
-
-            await productInventory.AddProductAsync(prod);
+            await this.prodRep.UpdateProductAsync(prod);
         }
     }
 }

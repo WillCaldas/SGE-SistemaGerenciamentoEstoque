@@ -28,7 +28,15 @@ namespace SGE.Plugins.EFCore
             await dbContext.SaveChangesAsync();
         }
 
-        public async Task<List<Product>> GetProductsByName(string name)
+        public async Task<Product> GetProductByIdAsync(int id)
+        {
+            return await dbContext.Products
+                .Include(x => x.ProductInventories)
+                .ThenInclude(x => x.Inventory)
+                .FirstOrDefaultAsync(x => x.ProductId == id);
+        }
+
+        public async Task<List<Product>> GetProductsByNameAsync(string name)
         {
             return await this.dbContext
                 .Products
@@ -36,5 +44,25 @@ namespace SGE.Plugins.EFCore
                 db.ProductName.Contains(name, StringComparison.OrdinalIgnoreCase) ||
                 string.IsNullOrWhiteSpace(name)).ToListAsync();
         }
+
+        public async Task UpdateProductAsync(Product prod)
+        {
+            if (dbContext.Products.Any(x => x.ProductName.Equals(prod.ProductName, StringComparison.OrdinalIgnoreCase)))
+            {
+                return;
+            }
+            
+            var product = await dbContext.Products.FindAsync(prod.ProductId);
+            if (product != null)
+            {
+                product.ProductName = prod.ProductName;
+                product.Price = prod.Price;
+                product.Quantity = prod.Quantity;
+                product.ProductInventories = prod.ProductInventories;
+
+                await dbContext.SaveChangesAsync();
+            }
+        }
     }
 }
+

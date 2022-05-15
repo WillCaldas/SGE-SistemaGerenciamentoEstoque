@@ -2,7 +2,7 @@
 
 namespace SGE.UseCases.Interfaces
 {
-    public interface IAddProductUseCase
+    public interface IEditProductUseCase
     {
         Task ExecuteAsync(Product prod);
     }
