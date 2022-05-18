@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using SGE.Plugins.EFCore;
+using SGE.UseCases;
 using SGE.UseCases.Interfaces;
 using SGE.UseCases.Inventories;
 using SGE.UseCases.PluginInterfaces;
@@ -34,6 +35,7 @@ builder.Services.AddDbContext<SGEContext>(options =>
 //DI repositories
 builder.Services.AddTransient<IInventoryRepository, InventoryRepository>();
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
+builder.Services.AddTransient<IInventoryTransactionRepository, InventoryTransactionRepository>();
 
 //DI use cases
 builder.Services.AddTransient<IViewInventoriesByNameUseCase, ViewInventoriesByNameUseCase>();
@@ -45,6 +47,7 @@ builder.Services.AddTransient<IAddProductUseCase, AddProductUseCase>();
 builder.Services.AddTransient<IViewProductByIdUseCase, ViewProductByIdUseCase>();
 builder.Services.AddTransient<IEditProductUseCase, EditProductUseCase>();
 builder.Services.AddTransient<IDeleteProductUseCase, DeleteProductUseCase>();
+builder.Services.AddTransient<IPurchaseInventoryUseCase, PurchaseInventoryUseCase>();
 
 var app = builder.Build();
 
@@ -52,7 +55,7 @@ var scope = app.Services.CreateScope();
 var sgeContext = scope.ServiceProvider.GetRequiredService<SGEContext>();
 sgeContext.Database.EnsureDeleted();
 sgeContext.Database.EnsureCreated();
-
+ 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
