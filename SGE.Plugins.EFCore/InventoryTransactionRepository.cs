@@ -23,11 +23,11 @@ namespace SGE.Plugins.EFCore
                 PONumber = poNumber,
                 InventoryId = inventory.InventoryId,
                 QuantityBefore = inventory.Quantity,
-                InventoryType = InventoryTransactionType.PurchaseInventory,
+                ActivityType = InventoryTransactionType.PurchaseInventory,
                 QuantityAfter = inventory.Quantity + quantity,
                 TransactionDate = DateTime.Now,
                 DoneBy = doneBy,
-                Cost = price * quantity
+                UnitPrice = price * quantity
             });
             await this.dbContext.SaveChangesAsync();
         }
