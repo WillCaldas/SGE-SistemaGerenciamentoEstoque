@@ -1,6 +1,6 @@
 ﻿using SGE.CoreBusiness;
 
-namespace SGE.UseCases
+namespace SGE.UseCases.Interfaces
 {
     public interface IValidateEnoughInventoriesForProducingUseCase
     {

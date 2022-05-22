@@ -1,4 +1,5 @@
 ﻿using SGE.CoreBusiness;
+using SGE.UseCases.Interfaces;
 using SGE.UseCases.PluginInterfaces;
 using System;
 using System.Collections.Generic;
@@ -26,9 +27,9 @@ namespace SGE.UseCases
             this.invTransRep = invTransRep;
             this.prodTransRep = prodTransRep;
         }
-        public async Task ExecuteAsync(string prodOrder, Product product, int quantity, double price, string doneBy)
+        public async Task ExecuteAsync(string prodOrder, Product product, int quantity, string doneBy)
         {
-            await this.prodTransRep.ProduceAsync(prodOrder, product, quantity, price, doneBy);
+            await this.prodTransRep.ProduceAsync(prodOrder, product, quantity, product.Price, doneBy);
 
             product.Quantity += quantity;
             await this.prodRep.UpdateProductAsync(product);
