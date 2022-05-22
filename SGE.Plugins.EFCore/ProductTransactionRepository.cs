@@ -44,6 +44,21 @@ namespace SGE.Plugins.EFCore
             });
             await this.dbContext.SaveChangesAsync();
         }
+
+        public async Task SellProductAsync(string salesOrderNumber, Product product, int quantity, double price, string doneBy)
+        {
+            this.dbContext.ProductTransactions.Add(new ProductTransaction
+            {
+                SalesOrderNumber = salesOrderNumber,
+                ProductId = product.ProductId,
+                QuantityBefore = product.Quantity,
+                QuantityAfter = product.Quantity -= quantity,
+                TransactionDate= DateTime.Now,
+                DoneBy= doneBy,
+                UnitPrice= price
+            });
+            await this.dbContext.SaveChangesAsync();
+        }
     }
 }
 
