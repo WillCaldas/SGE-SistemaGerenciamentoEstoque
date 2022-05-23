@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SGE.UseCases
+namespace SGE.UseCases.Activities
 {
     public class ProduceProductUseCase : IProduceProductUseCase
     {
@@ -29,10 +29,10 @@ namespace SGE.UseCases
         }
         public async Task ExecuteAsync(string prodOrder, Product product, int quantity, string doneBy)
         {
-            await this.prodTransRep.ProduceAsync(prodOrder, product, quantity, product.Price, doneBy);
+            await prodTransRep.ProduceAsync(prodOrder, product, quantity, product.Price, doneBy);
 
             product.Quantity += quantity;
-            await this.prodRep.UpdateProductAsync(product);
+            await prodRep.UpdateProductAsync(product);
         }
     }
 }

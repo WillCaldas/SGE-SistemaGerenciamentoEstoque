@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SGE.UseCases
+namespace SGE.UseCases.Activities
 {
     public class PurchaseInventoryUseCase : IPurchaseInventoryUseCase
     {
@@ -24,10 +24,10 @@ namespace SGE.UseCases
 
         public async Task ExecuteAsync(string poNumber, Inventory inventory, int quantity, string doneBy)
         {
-            await this.inventoryTransactionRepository.PurchaseAsync(poNumber, inventory, quantity, inventory.Price, doneBy);
+            await inventoryTransactionRepository.PurchaseAsync(poNumber, inventory, quantity, inventory.Price, doneBy);
 
             inventory.Quantity += quantity;
-            await this.inventoryRepository.UpdateInventoryAsync(inventory);
+            await inventoryRepository.UpdateInventoryAsync(inventory);
         }
     }
 }

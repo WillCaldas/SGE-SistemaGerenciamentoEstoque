@@ -46,6 +46,7 @@
         if (this.selectedProduct.Quantity < this.sellViewModel.QuantityToSell)
         {
             this.errorMessage = $"A quantidade do produto não é suficiente. Apenas {this.selectedProduct.Quantity} estão disponíveis.";
+            
             return;
         }
         else

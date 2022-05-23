@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using SGE.Plugins.EFCore;
-using SGE.UseCases;
+using SGE.UseCases.Activities;
 using SGE.UseCases.Interfaces;
 using SGE.UseCases.Inventories;
 using SGE.UseCases.PluginInterfaces;
 using SGE.UseCases.Products;
+using SGE.UseCases.Reports;
+using SGE.UseCases.Validations;
 using SGE.WebApp.Areas.Identity;
 using SGE.WebApp.Data;
 
@@ -53,6 +55,7 @@ builder.Services.AddTransient<IPurchaseInventoryUseCase, PurchaseInventoryUseCas
 builder.Services.AddTransient<IValidateEnoughInventoriesForProducingUseCase, ValidateEnoughInventoriesForProducingUseCase>();
 builder.Services.AddTransient<IProduceProductUseCase, ProduceProductUseCase>();
 builder.Services.AddTransient<ISellProductUseCase, SellProductUseCase>();
+builder.Services.AddTransient<ISearchInventoryTransactionsUseCase, SearchInventoryTransactionsUseCase>();
 
 var app = builder.Build();
 

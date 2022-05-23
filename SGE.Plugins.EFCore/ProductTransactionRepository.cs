@@ -27,7 +27,20 @@ namespace SGE.Plugins.EFCore
             {
                 foreach (var prodInv in prod.ProductInventories)
                 {
+                    int qtyBefore = prodInv.Inventory.Quantity;
                     prodInv.Inventory.Quantity -= quantity * prodInv.InventoryQuantity;
+
+                    this.dbContext.InventoryTransactions.Add(new InventoryTransaction
+                    {
+                        ProductionNumber = prodNumber,
+                        InventoryId = prodInv.Inventory.InventoryId,
+                        QuantityBefore = qtyBefore,
+                        ActivityType = InventoryTransactionType.ProduceProduct,
+                        QuantityAfter = prodInv.Inventory.Quantity,
+                        TransactionDate = DateTime.Now,
+                        DoneBy = doneBy,
+                        UnitPrice = price * quantity
+                    });
                 }
             }
 
