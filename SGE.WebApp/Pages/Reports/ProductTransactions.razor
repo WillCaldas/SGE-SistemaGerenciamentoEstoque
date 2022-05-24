@@ -1,0 +1,99 @@
+﻿@page "/productReport"
+<h3>Transações de produto</h3>
+<br />
+
+@inject ISearchProductTransactionUseCase SearchProductTransactionUseCase
+
+<div class="row">
+    <div class="col">
+        <label for="inv">Nome produto</label>
+        <input type="text" id="inv" class="form-control" @bind-value="prodName" />
+    </div>
+    <div class="col">
+        <label for="dtFrom">Data de</label>
+        <input type="date" id="dtFrom" class="form-control" @bind-value="dateFrom" />
+    </div>
+    <div class="col">
+        <label for="dtTo">Data até</label>
+        <input type="date" id="dtTo" class="form-control" @bind-value="dateTo" />
+    </div>
+    <div class="col">
+        <label for="actType">Tipo de Atividade</label>
+        <select id="actType" class="form-control" @bind="activityTypeId">
+            <option value="0"></option>
+            <option value="1">Produzir Produto</option>
+            <option value="2">Venda de produto</option>
+        </select>
+    </div>
+    <div class="col">
+        <label>&nbsp;</label>
+        <button type="button" class="btn btn-primary form-control" @onclick="SearchProducts">Buscar</button>
+    </div>
+</div>
+<br />
+@if (prodTransactions != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Produto</th>
+                <th>Atividade</th>
+                <th>Qtd Antes</th>
+                <th>Qtd depois</th>
+                <th>Produção #</th>
+                <th>SO#</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pt in prodTransactions)
+            {
+                <tr>
+                    <td>@pt.TransactionDate.ToString("dd/MM/yyyy")</td>
+                    <td>@pt.Product.ProductName</td>
+                    <td>
+                        @if (pt.ActivityType == ProductTransactionType.SellProduct)
+                        {
+                            <text>Venda</text>
+                        }
+                        else if (pt.ActivityType == ProductTransactionType.ProduceProduct)
+                        {
+                            <text>Produzir</text>
+                        }
+                    </td>
+                    <td>@pt.QuantityBefore</td>
+                    <td>@pt.QuantityAfter</td>
+                    <td>@pt.ProductionNumber</td>
+                    <td>@pt.SalesOrderNumber</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private string prodName;
+    private DateTime? dateFrom;
+    private DateTime? dateTo;
+    private int activityTypeId = 0;
+    private IEnumerable<ProductTransaction> prodTransactions;
+
+    private async Task SearchProducts()
+    {
+        ProductTransactionType? prodTransType = null;
+
+        if (activityTypeId != 0)
+        {
+            prodTransType = (ProductTransactionType)activityTypeId;
+        }
+
+        prodTransactions = await SearchProductTransactionUseCase.ExecuteAsync(
+            prodName,
+            dateFrom,
+            dateTo,
+            prodTransType
+        );
+    }
+}
+
+

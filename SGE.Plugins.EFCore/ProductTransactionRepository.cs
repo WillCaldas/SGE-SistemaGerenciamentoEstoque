@@ -19,6 +19,27 @@ namespace SGE.Plugins.EFCore
             this.dbContext = dbContext;
             this.prodRed = prodRed;
         }
+
+        public async Task<IEnumerable<ProductTransaction>> GetProductTransactionsAsync(
+            string prodName, 
+            DateTime? dateFrom, 
+            DateTime? dateTo, 
+            ProductTransactionType? transType)
+        {
+            if (dateTo.HasValue) dateTo.Value.AddDays(1);
+
+            var query = from pt in dbContext.ProductTransactions
+                        join prod in dbContext.Products on pt.ProductId equals prod.ProductId
+                        where
+                            (string.IsNullOrWhiteSpace(prodName) || prod.ProductName.Contains(prodName, StringComparison.OrdinalIgnoreCase)) &&
+                            (!dateFrom.HasValue || pt.TransactionDate >= dateFrom.Value.Date) &&
+                            (!dateTo.HasValue || pt.TransactionDate <= dateTo.Value.Date) &&
+                            (!transType.HasValue || pt.ActivityType == transType)
+                        select pt;
+
+            return await query.Include(x => x.Product).ToListAsync();
+        }
+
         public async Task ProduceAsync(string prodNumber, Product prod, int quantity, double price, string doneBy)
         {
             var product = this.prodRed.GetProductByIdAsync(prod.ProductId);
@@ -65,6 +86,7 @@ namespace SGE.Plugins.EFCore
                 SalesOrderNumber = salesOrderNumber,
                 ProductId = product.ProductId,
                 QuantityBefore = product.Quantity,
+                ActivityType = ProductTransactionType.SellProduct,
                 QuantityAfter = product.Quantity -= quantity,
                 TransactionDate= DateTime.Now,
                 DoneBy= doneBy,

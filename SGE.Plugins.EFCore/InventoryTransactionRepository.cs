@@ -24,6 +24,8 @@ namespace SGE.Plugins.EFCore
             DateTime? dateTo, 
             InventoryTransactionType? transType)
         {
+            if (dateTo.HasValue) dateTo.Value.AddDays(1);
+
             var query = from it in dbContext.InventoryTransactions
                         join inv in dbContext.Inventories on it.InventoryId equals inv.InventoryId
                         where
