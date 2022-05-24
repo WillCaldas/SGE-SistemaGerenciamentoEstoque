@@ -3,73 +3,80 @@
 <br />
 
 @inject ISearchInventoryTransactionsUseCase SearchInventoryTransactionsUseCase
+@inject IJSRuntime JSRuntime
 
-<div class="row">
-    <div class="col">
-        <label for="inv">Nome estoque</label>
-        <input type="text" id="inv" class="form-control" @bind-value="invName" />
+<div id="printarea">
+    <div class="row">
+        <div class="col">
+            <label for="inv">Nome estoque</label>
+            <input type="text" id="inv" class="form-control" @bind-value="invName" />
+        </div>
+        <div class="col">
+            <label for="dtFrom">Data de</label>
+            <input type="date" id="dtFrom" class="form-control" @bind-value="dateFrom" />
+        </div>
+        <div class="col">
+            <label for="dtTo">Data até</label>
+            <input type="date" id="dtTo" class="form-control" @bind-value="dateTo" />
+        </div>
+        <div class="col">
+            <label for="actType">Tipo de Atividade</label>
+            <select id="actType" class="form-control" @bind="activityTypeId">
+                <option value="0"></option>
+                <option value="1">Comprar estoque</option>
+                <option value="2">Produzir Produto</option>
+            </select>
+        </div>
+        <div class="col">
+            <label>&nbsp;</label>
+            <button type="button" class="btn btn-primary form-control" @onclick="SearchInventories">Buscar</button>
+        </div>
+        <div class="col">
+            <label>&nbsp;</label>
+            <button type="button" class="btn btn-primary form-control" @onclick="PrintReport">imprimir</button>
+        </div>
     </div>
-    <div class="col">
-        <label for="dtFrom">Data de</label>
-        <input type="date" id="dtFrom" class="form-control" @bind-value="dateFrom" />
-    </div>
-    <div class="col">
-        <label for="dtTo">Data até</label>
-        <input type="date" id="dtTo" class="form-control" @bind-value="dateTo" />
-    </div>
-    <div class="col">
-        <label for="actType">Tipo de Atividade</label>
-        <select id="actType" class="form-control" @bind="activityTypeId">
-            <option value="0"></option>
-            <option value="1">Comprar estoque</option>
-            <option value="2">Produzir Produto</option>
-        </select>
-    </div>
-    <div class="col">
-        <label>&nbsp;</label>
-        <button type="button" class="btn btn-primary form-control" @onclick="SearchInventories">Buscar</button>
-    </div>
-</div>
-<br />
-@if (invTransactions != null)
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Estoque</th>
-                <th>Atividade</th>
-                <th>Qtd Antes</th>
-                <th>Qtd depois</th>
-                <th>OP#</th>
-                <th>Produção #</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var it in invTransactions)
-            {
+    <br />
+    @if (invTransactions != null)
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@it.TransactionDate.ToString("dd/MM/yyyy")</td>
-                    <td>@it.Inventory.InventoryName</td>
-                    <td>
-                        @if (it.ActivityType == InventoryTransactionType.PurchaseInventory)
-                        {
-                            <text>Compra</text>
-                        }
-                        else if (it.ActivityType == InventoryTransactionType.ProduceProduct)
-                        {
-                            <text>Produzir</text>
-                        }
-                    </td>
-                    <td>@it.QuantityBefore</td>
-                    <td>@it.QuantityAfter</td>
-                    <td>@it.PONumber</td>
-                    <td>@it.ProductionNumber</td>
+                    <th>Data</th>
+                    <th>Estoque</th>
+                    <th>Atividade</th>
+                    <th>Qtd Antes</th>
+                    <th>Qtd depois</th>
+                    <th>OP#</th>
+                    <th>Produção #</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
+            </thead>
+            <tbody>
+                @foreach (var it in invTransactions)
+                {
+                    <tr>
+                        <td>@it.TransactionDate.ToString("dd/MM/yyyy")</td>
+                        <td>@it.Inventory.InventoryName</td>
+                        <td>
+                            @if (it.ActivityType == InventoryTransactionType.PurchaseInventory)
+                            {
+                                <text>Compra</text>
+                            }
+                            else if (it.ActivityType == InventoryTransactionType.ProduceProduct)
+                            {
+                                <text>Produzir</text>
+                            }
+                        </td>
+                        <td>@it.QuantityBefore</td>
+                        <td>@it.QuantityAfter</td>
+                        <td>@it.PONumber</td>
+                        <td>@it.ProductionNumber</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
 
 @code {
     private string invName;
@@ -93,6 +100,11 @@
             dateTo,
             invTransType
         );
+    }
+
+    private void PrintReport()
+    {
+        JSRuntime.InvokeVoidAsync("print");
     }
 }
 
