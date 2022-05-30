@@ -20,7 +20,7 @@ namespace SGE.Plugins.EFCore
 
         public async Task AddProductAsync(Product product)
         {
-            if (dbContext.Products.Any(x => x.ProductName.Equals(product.ProductName, StringComparison.OrdinalIgnoreCase)))
+            if (dbContext.Products.Any(x => x.ProductName.ToLower() == product.ProductName.ToLower()))
             {
                 return;
             }
@@ -51,14 +51,16 @@ namespace SGE.Plugins.EFCore
             return await this.dbContext
                 .Products
                 .Where(db =>
-                (db.ProductName.Contains(name, StringComparison.OrdinalIgnoreCase) ||
+                (db.ProductName.ToLower().IndexOf(name.ToLower()) >= 0 ||
                 string.IsNullOrWhiteSpace(name)) &&
                 db.IsActive == true).ToListAsync();
         }
 
         public async Task UpdateProductAsync(Product prod)
         {
-            if (dbContext.Products.Any(x => x.ProductName.Equals(prod.ProductName, StringComparison.OrdinalIgnoreCase)))
+            //Para evitar que diferentes produtos tenham o mesmo nome
+
+            if (dbContext.Products.Any(x => x.ProductName.ToLower() == prod.ProductName.ToLower()))
             {
                 return;
             }

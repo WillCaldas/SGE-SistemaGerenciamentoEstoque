@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Sqlite;
 using SGE.Plugins.EFCore;
 using SGE.UseCases.Activities;
 using SGE.UseCases.Interfaces;
@@ -20,7 +21,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlite(connectionString));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -29,10 +31,11 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddSingleton<WeatherForecastService>();
 
+
+//Foram criadas duas DataBases, uma de Desenvolvimento e outra de Produção
 builder.Services.AddDbContext<SGEContext>(options => 
-{ 
-    options.UseInMemoryDatabase("SGE");
-});
+    options.UseSqlite(builder.Configuration.GetConnectionString("DevConnection"))
+);
 
 //DI repositories
 builder.Services.AddTransient<IInventoryRepository, InventoryRepository>();
@@ -62,8 +65,8 @@ var app = builder.Build();
 
 var scope = app.Services.CreateScope();
 var sgeContext = scope.ServiceProvider.GetRequiredService<SGEContext>();
-sgeContext.Database.EnsureDeleted();
-sgeContext.Database.EnsureCreated();
+//sgeContext.Database.EnsureDeleted();
+//sgeContext.Database.EnsureCreated();
  
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

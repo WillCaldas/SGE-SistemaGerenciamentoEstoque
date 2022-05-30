@@ -31,7 +31,7 @@ namespace SGE.Plugins.EFCore
             var query = from pt in dbContext.ProductTransactions
                         join prod in dbContext.Products on pt.ProductId equals prod.ProductId
                         where
-                            (string.IsNullOrWhiteSpace(prodName) || prod.ProductName.Contains(prodName, StringComparison.OrdinalIgnoreCase)) &&
+                            (string.IsNullOrWhiteSpace(prodName) || prod.ProductName.ToLower().IndexOf(prodName.ToLower()) >= 0) &&
                             (!dateFrom.HasValue || pt.TransactionDate >= dateFrom.Value.Date) &&
                             (!dateTo.HasValue || pt.TransactionDate <= dateTo.Value.Date) &&
                             (!transType.HasValue || pt.ActivityType == transType)

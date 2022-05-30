@@ -29,7 +29,7 @@ namespace SGE.Plugins.EFCore
             var query = from it in dbContext.InventoryTransactions
                         join inv in dbContext.Inventories on it.InventoryId equals inv.InventoryId
                         where
-                            (string.IsNullOrWhiteSpace(invName) || inv.InventoryName.Contains(invName, StringComparison.OrdinalIgnoreCase)) &&
+                            (string.IsNullOrWhiteSpace(invName) || inv.InventoryName.ToLower().IndexOf(invName.ToLower()) >= 0 ) &&
                             (!dateFrom.HasValue || it.TransactionDate >= dateFrom.Value.Date) &&
                             (!dateTo.HasValue || it.TransactionDate <= dateTo.Value.Date) &&
                             (!transType.HasValue || it.ActivityType == transType)
